@@ -310,7 +310,7 @@ class Controller extends \Piwik\Plugin\Controller
      * It was used as a template for this function.
      * See: {@link \Piwik\Core::hasTheUserSuperUserAccess($theUser)} method.
      * See: {@link \Piwik\Plugins\UsersManager\Model::getUsersHavingSuperUserAccess()} method.
-     * 
+     *
      * @param  string  $theUser A username to be checked for superuser access
      * @return bool
      */
@@ -387,12 +387,15 @@ class Controller extends \Piwik\Plugin\Controller
             }
 
             // set an invalid pre-hashed password, to block the user from logging in by password
-            Access::getInstance()->doAsSuperUser(function () use ($matomoUserLogin, $result) {
+            Access::getInstance()->doAsSuperUser(function () use ($matomoUserLogin, $settings, $result) {
                 UsersManagerApi::getInstance()->addUser($matomoUserLogin,
                                                         "(disallow password login)",
                                                         $matomoUserLogin,
                                                         /* $_isPasswordHashed = */ true,
                                                         /* $initialIdSite = */ null);
+                if($settings->enableAutoAssignSuperadmin->getValue()) {
+                    UsersManagerApi::getInstance()->setSuperUserAccess($matomoUserLogin, true);
+                }
             });
             $userModel = new Model();
             $user = $userModel->getUser($matomoUserLogin);

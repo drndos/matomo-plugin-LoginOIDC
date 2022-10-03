@@ -1,5 +1,7 @@
 {
     "LoginOIDC": {
+        "SettingEnableAutoAssignSuperadmin": "Autoassign Super admin for new users",
+        "SettingEnableAutoAssignSuperadminHelp": "",
         "SettingDisableSuperuser": "Disable external login for superusers",
         "SettingDisableSuperuserHelp": "",
         "SettingDisablePasswordConfirmation": "Disable password confirmation",

@@ -147,6 +147,13 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
     public $allowedSignupDomains;
 
     /**
+     * Should be the new user superadmin?
+     *
+     * @var bool
+     */
+    public $enableAutoAssignSuperadmin;
+
+    /**
      * Initialize the plugin settings.
      *
      * @return void
@@ -171,6 +178,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
         $this->allowedRole = $this->createAllowedRoleSetting();
         $this->redirectUriOverride = $this->createRedirectUriOverrideSetting();
         $this->allowedSignupDomains = $this->createAllowedSignupDomainsSetting();
+        $this->enableAutoAssignSuperadmin = $this->createEnableAutoAssignSuperadminSetting();
     }
 
     /**
@@ -439,6 +447,20 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
                     }
                 }
             };
+        });
+    }
+
+    /**
+     * Add Enable auto assign superuser setting.
+     *
+     * @return SystemSetting
+     */
+    private function createEnableAutoAssignSuperadminSetting() : SystemSetting
+    {
+        return $this->makeSetting("enableAutoAssignSuperadmin", $default = false, FieldConfig::TYPE_BOOL, function(FieldConfig $field) {
+            $field->title = Piwik::translate("LoginOIDC_SettingEnableAutoAssignSuperadmin");
+            $field->description = Piwik::translate("LoginOIDC_SettingEnableAutoAssignSuperadminHelp");
+            $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
         });
     }
 }
