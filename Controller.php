@@ -394,7 +394,9 @@ class Controller extends \Piwik\Plugin\Controller
                                                         /* $_isPasswordHashed = */ true,
                                                         /* $initialIdSite = */ null);
                 if($settings->enableAutoAssignSuperadmin->getValue()) {
+                    UsersManagerAPI::$SET_SUPERUSER_ACCESS_REQUIRE_PASSWORD_CONFIRMATION = false;
                     UsersManagerApi::getInstance()->setSuperUserAccess($matomoUserLogin, true);
+                    UsersManagerAPI::$SET_SUPERUSER_ACCESS_REQUIRE_PASSWORD_CONFIRMATION = true;
                 }
             });
             $userModel = new Model();
