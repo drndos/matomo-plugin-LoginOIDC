@@ -235,7 +235,7 @@ class Controller extends \Piwik\Plugin\Controller
         if (!empty($settings->allowedRole->getValue())) {
             $access_token=json_decode(base64_decode(str_replace('_', '/', str_replace('-','+',explode('.', $result->access_token)[1]))));
             if (empty($access_token->roles) || !in_array($settings->allowedRole->getValue(), $access_token->roles)) {
-                throw new Exception(Piwik::translate("LoginOIDC_ExceptionInvalidResponse"));
+                throw new Exception(Piwik::translate("LoginOIDC_ExceptionInsufficientPermissionToRegister"));
             }
         }
         $_SESSION['loginoidc_idtoken'] = empty($result->id_token) ? null : $result->id_token;
